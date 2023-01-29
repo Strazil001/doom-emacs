@@ -24,7 +24,8 @@
 (setq doom-font (font-spec :family "JetBrainsMono Nerd Font" :size 13 :weight 'medium)
       doom-variable-pitch-font (font-spec :family "JetBrainsMono Nerd Font" :size 12)
       doom-unicode-font (font-spec :family "JetBrainsMono Nerd Font" :size 16)
-      doom-big-font (font-spec :family "JetBrainsMono Nerd Font" :size 16))
+      doom-big-font (font-spec :family "JetBrainsMono Nerd Font" :size 16)
+      projectile-project-search-path '("~/code/"))
 ;;
 ;; If you or Emacs can't find your font, use 'M-x describe-font' to look them
 ;; up, `M-x eval-region' to execute elisp code, and 'M-x doom/reload-font' to
@@ -36,6 +37,9 @@
 ;; `load-theme' function. This is the default:
 (setq doom-theme 'catppuccin)
 
+(setq evil-default-cursor t) ;; Now evil takes the default cursors
+(setq default-frame-alist '((cursor-color . "#fab387")))
+
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
 (setq display-line-numbers-type 'relative)
@@ -44,7 +48,13 @@
 ;; change `org-directory'. It must be set before org loads!
 (setq org-directory "~/Documents/org/")
 
-(setq doom-themes-treemacs-theme "doom-colors")
+(defun my/disable-scroll-bars (frame)
+  (modify-frame-parameters frame
+                           '((vertical-scroll-bars . nil)
+                             (horizontal-scroll-bars . nil))))
+(add-hook 'after-make-frame-functions 'my/disable-scroll-bars)
+
+(setq web-mode-auto-close-style 2)
 
 (use-package! org-fancy-priorities
   :ensure t
@@ -55,39 +65,41 @@
 
 (after! org
   (require 'org-bullets)
-  (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
-  (require 'unicode-fonts)
-  (unicode-fonts-setup))
+  (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
 
+(add-hook 'prog-mode-hook 'format-all-mode)
 ;; Tabbar
-(use-package! centaur-tabs
-  :demand
-  :config
-  (centaur-tabs-mode t)
-  (setq centaur-tabs-style "rounded"
-        centaur-tabs-height 25
-        centaur-tabs-set-icons t
-        centaur-tabs-modified-marker "●"
-        centaur-tabs-show-new-tab-button nil
-        centaur-tabs-set-bar 'under
-        ;; Note: If you're not using Spacmeacs, in order for the underline to display
-        ;; correctly you must add the following line:
-        x-underline-at-descent-line t
-        centaur-tabs-set-close-button nil)
-  :bind
-  (:map evil-normal-state-map
-        ("g t" . centaur-tabs-forward)
-        ("g T" . centaur-tabs-backward)))
+;;(use-package! centaur-tabs
+;;  :demand
+;;  :config
+;;  (centaur-tabs-mode t)
+;;  (setq centaur-tabs-style "rounded"
+;;        centaur-tabs-height 25
+;;        centaur-tabs-set-icons t
+;;        centaur-tabs-modified-marker "●"
+;;        centaur-tabs-show-new-tab-button nil
+;;        centaur-tabs-set-bar 'under
+;;        ;; Note: If you're not using Spacmeacs, in order for the underline to display
+;;        ;; correctly you must add the following line:
+;;        x-underline-at-descent-line t
+;;        centaur-tabs-set-close-button nil)
+;;  :bind
+;;  (:map evil-normal-state-map
+;;        ("g t" . centaur-tabs-forward)
+;;        ("g T" . centaur-tabs-backward)))
 
-(use-package! treemacs
-  :config
-  (setq treemacs-git-mode 'extended
-        treemacs-width 30
-        treemacs-tag-follow-cleanup t
-        treemacs-tag-follow-delay 1.5
-        treemacs-indent-guide-style 'line
-        treemacs-follow-mode t
-        treemacs-filewatch-mode t))
+(after! treemacs
+  (use-package! treemacs
+    :ensure t
+    :config
+    (setq treemacs-git-mode 'extended
+          treemacs-width 30
+          treemacs-tag-follow-cleanup t
+          treemacs-tag-follow-delay 1.5
+          treemacs-indent-guide-style 'line
+          treemacs-follow-mode t
+          doom-themes-treemacs-theme "doom-colors"
+          treemacs-filewatch-mode t)))
 
 (use-package! doom-modeline
   :ensure t
