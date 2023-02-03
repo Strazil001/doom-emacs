@@ -621,7 +621,7 @@ Must be one of `mocha`, `macchiato`, `frappe`, or `latte`"
                ;; lsp
                (lsp-ui-peek-peek :background ,ctp-base)
                (lsp-ui-peek-list :background ,ctp-surface2)
-               (lsp-ui-peek-filename :foreground ,ctp-text)
+               (lsp-ui-peek-filename :foreground ,ctp-blue)
                (lsp-ui-peek-line-number :foreground ,ctp-surface1)
                (lsp-ui-peek-highlight :inherit highlight :distant-foreground ,ctp-base)
                (lsp-ui-peek-header :foreground ,ctp-sapphire, :weight bold)

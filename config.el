@@ -68,6 +68,8 @@
   (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
 
 (add-hook 'prog-mode-hook 'format-all-mode)
+
+(setq! shell-file-name "/bin/zsh")
 ;; Tabbar
 ;;(use-package! centaur-tabs
 ;;  :demand
