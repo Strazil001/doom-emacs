@@ -22,7 +22,14 @@
 ;; accept. For example:
 ;;
 (setq doom-font (font-spec :family "JetBrainsMono Nerd Font" :size 13)
-      doom-variable-pitch-font (font-spec :family "JetBrainsMono Nerd Font" :size 14))
+      doom-variable-pitch-font (font-spec :family "JetBrainsMono Nerd Font" :size 14)
+      doom-big-font (font-spec :family "JetBrainsMono Nerd Font" :size 24))
+(after! doom-themes
+  (setq doom-themes-enable-bold t
+        doom-themes-enable-italic t))
+(custom-set-faces!
+  '(font-lock-comment-face :slant italic)
+  '(font-lock-keyword-face :slant italic))
 ;;
 ;; If you or Emacs can't find your font, use 'M-x describe-font' to look them
 ;; up, `M-x eval-region' to execute elisp code, and 'M-x doom/reload-font' to
@@ -42,8 +49,15 @@
 
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
-(setq org-directory "~/org/")
-
+(setq org-directory "~/org/"
+      org-hide-emphasis-markers t)
+(custom-theme-set-faces!
+  'catppuccin
+  '(org-level-4 :inherit outline-4 :height 1.1)
+  '(org-level-3 :inherit outline-3 :height 1.2)
+  '(org-level-2 :inherit outline-2 :height 1.3)
+  '(org-level-1 :inherit outline-1 :height 1.5)
+  '(org-document-title :height 1.6 :underline nil))
 
 ;; Whenever you reconfigure a package, make sure to wrap your config in an
 ;; `after!' block, otherwise Doom's defaults may override your settings. E.g.
