@@ -1,4 +1,6 @@
 #+title: Doom emacs config
+#+property: header-args :tangle config.el
+#+startup: showeverything
 #+author: Steve Van de Vyver
 
 * *UI Configuration*
@@ -14,12 +16,17 @@
   '(font-lock-comment-face :slant italic)
   '(font-lock-keyword-face :slant italic))
 #+end_src
+** Editor
+#+begin_src emacs-lisp
+(setq display-line-numbers-type `relative)
+#+end_src
 ** Theme
 #+begin_src emacs-lisp
 (setq doom-theme 'catppuccin)
 (setq catppuccin-flavor 'macchiato)
 #+end_src
 ** Org
+Basic styling for org docs, setting the hight of the headers.
 #+begin_src emacs-lisp
 (setq org-directory "~/org/"
       org-hide-emphasis-markers t)
